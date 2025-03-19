@@ -1,6 +1,6 @@
 # Military Therapy Service
 ## Architecture and Flows Preview
-### High-Lelev Service Giagram
+### High-Level Service Diagram
 ![therapy_webapp-service](https://github.com/user-attachments/assets/5ad6ff05-af7a-4d2c-9883-e74ed740514e)
 
 ### Entities Relationship
