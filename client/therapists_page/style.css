@@ -1,0 +1,337 @@
+/* Base styles */
+body {
+    font-family: "Comfortaa", Helvetica, sans-serif;
+    background-color: #f7fbf1;
+    margin: 0;
+    padding: 0;
+}
+  
+.therapists {
+    display: flex;
+    max-width: 1280px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+  /* Sidebar styles */
+.sidebar {
+    width: 293px;
+    background-color: #a2b08d;
+    box-shadow: 0px 4px 4px #00000040;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.overlap-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 35px 0;
+}
+
+.platform-name {
+    font-family: "Anonymous Pro", Helvetica, monospace;
+    font-weight: 400;
+    color: #000000;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+  
+  .nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+  
+.nav li {
+    margin-bottom: 20px;
+}
+  
+.nav a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #000000;
+    font-size: 32px;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+  
+.nav a:hover,
+.nav a:focus {
+    color: #ffffff;
+}
+
+.call-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    margin-left: 44px;
+    background-color: #f7fbf1;
+    border-radius: 32px;
+    transition: background-color 0.3s ease;
+}
+
+.call-icon:hover,
+.call-icon:focus {
+    background-color: #e0e7d7;
+}
+  
+  /* Main content styles */
+main {
+    flex: 1;
+    padding: 20px;
+    margin-left: 293px; /* Add left margin to account for fixed sidebar */
+    width: calc(100% - 293px); /* Adjust width to account for sidebar */
+}
+  
+.best-psychol-card,
+.view {
+    max-width: 738px;
+    margin: 0 auto 20px;
+}
+  
+.overlap,
+.overlap-2 {
+    display: flex;
+    flex-direction: column;
+    background-color: #f7fbf1;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0px 4px 4px #00000040;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+}
+
+.overlap {
+    border: 2px solid #43493a;
+}
+  
+.overlap-2 {
+    border: 2px solid #a2b08d;
+}
+  
+.best-match {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    font-weight: 700;
+    color: #a2b08d;
+    font-size: 22px;
+}
+  
+.psychol-info {
+    display: flex;
+    gap: 20px;
+}
+  
+.psychol-img-container {
+    flex: 0 0 196px;
+}
+
+.psuychol-img,
+.psychol-img {
+    width: 196px;
+    height: 196px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.psychol-details {
+    flex: 1;
+}
+
+.psychol-name,
+.psychol-name-2 {
+    font-weight: 700;
+    color: #000000;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.psychol-profession,
+.psychol-profession-2 {
+    color: #0000008c;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+  
+.psychol-text {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 40px; /* Increased to prevent overlap with button */
+}
+
+.write-button,
+.overlap-group-wrapper {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    background: none;
+}
+
+.div-wrapper,
+.overlap-group-2 {
+    background-color: #43493a;
+    border-radius: 15px;
+    padding: 6px 20px;
+}
+  
+.overlap-group-2 {
+    background-color: #a2b08d;
+}
+  
+.text-wrapper-3,
+.text-wrapper-4 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.write-button:hover,
+.write-button:focus,
+.overlap-group-wrapper:hover,
+.overlap-group-wrapper:focus {
+    opacity: 0.9;
+}
+
+.check-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 24px;
+    height: 24px;
+}
+  
+  /* Responsive styles */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+  
+    main {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+  
+    .call-icon {
+        margin-left: 20px;
+    }
+  
+    .nav a {
+        font-size: 24px;
+    }
+}
+  
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+  
+    .overlap-group {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+  
+    .platform-name {
+        margin-bottom: 0;
+    }
+  
+    .nav {
+        margin-bottom: 0;
+        flex-grow: 0;
+    }
+  
+    .nav ul {
+        display: flex;
+        justify-content: space-around;
+    }
+  
+    .nav li {
+        margin-bottom: 0;
+    }
+  
+    .call-icon {
+        margin: 0;
+    }
+  
+    main {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px 10px;
+    }
+  
+    .psychol-info {
+        flex-direction: column;
+        align-items: center;
+    }
+  
+    .psychol-img-container {
+        flex: none;
+        width: 100%;
+        max-width: 196px;
+        margin-bottom: 20px;
+    }
+  
+    .psychol-details {
+        text-align: center;
+    }
+  
+    .write-button,
+    .overlap-group-wrapper {
+        position: static;
+        margin-top: 20px;
+        align-self: flex-end;
+    }
+}
+  
+@media (max-width: 480px) {
+    .platform-name {
+        font-size: 20px;
+    }
+  
+    .nav a {
+        font-size: 18px;
+    }
+  
+    .best-match {
+        font-size: 18px;
+    }
+  
+    .psychol-name,
+    .psychol-name-2 {
+        font-size: 20px;
+    }
+  
+    .psychol-profession,
+    .psychol-profession-2 {
+        font-size: 16px;
+    }
+  
+    .psychol-text {
+        font-size: 14px;
+    }
+  }
+  
