@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9faef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #f9faef;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .progress-bar div {
+            height: 5px;
+            width: 15%;
+            background: #dcdcdc;
+            border-radius: 5px;
+        }
+        .progress-bar div.active {
+            background: #c4d4a4;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .option {
+            background: #d1cd99;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back {
+            background: #dcdcdc;
+        }
+        .next {
+            background: #aab08f;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="progress-bar" id="progress-bar">
+            <div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+        <h2 id="question-title">Спогади про бойові дії</h2>
+        <div id="options">
+            <div class="option">З’являються рідко або не заважають</div>
+            <div class="option">Іноді з’являються, але я можу їх контролювати</div>
+            <div class="option">Часто переслідують, важко позбутися</div>
+        </div>
+        <div class="buttons">
+            <button class="button back" onclick="prevQuestion()">Назад</button>
+            <button class="button next" onclick="nextQuestion()">Далі</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { title: "Відчуття небезпеки", options: ["Рідко або ніколи", "Часом відчуваю тривогу", "Постійно насторожений і не можу розслабитися"] },
+            { title: "Гнів та самоконтроль", options: ["Ні, я контролюю свої емоції", "Іноді важко стриматися, але справляюся", "Часто вибухаю або не можу контролювати гнів"] },
+            { title: "Відносини з оточенням", options: ["Добре, є підтримка", "Часом важко, уникаю розмов про службу", "Віддалився від усіх, не хочу спілкуватися"] },
+            { title: "Спогади про бойові дії", options: ["Рідко або не заважають", "Іноді з'являються, але я можу контролювати їх", "Часто переслідують, важко від них позбутися"] },
+            { title: "Сон", options: ["Сплю нормально", "Часом прокидаюся або довго засинаю", "Постійно не висипаюся, сняться важкі сни або кошмари"] },
+            { title: "Відчуття сенсу та мотивація", options: ["Так, у мене є цілі та мотивація", "Часом втрачаю інтерес, але намагаюся триматися", "Важко знайти сенс у тому, що роблю"] }
+        ];
+
+        let currentQuestion = 0;
+
+        function updateQuestion() {
+            document.getElementById("question-title").innerText = questions[currentQuestion].title;
+            
+            let optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+            questions[currentQuestion].options.forEach(option => {
+                let div = document.createElement("div");
+                div.className = "option";
+                div.innerText = option;
+                optionsContainer.appendChild(div);
+            });
+
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            let bars = document.querySelectorAll(".progress-bar div");
+            bars.forEach((bar, index) => {
+                bar.classList.toggle("active", index <= currentQuestion);
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                updateQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                updateQuestion();
+            }
+        }
+
+        updateQuestion();
+    </script>
+</body>
+</html>
