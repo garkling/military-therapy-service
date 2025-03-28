@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Page</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="overlap-group">
+        <h1 class="platform-name">PHOENIX</h1>
+        <nav class="nav">
+          <ul>
+            <li><a href="#" class="text-wrapper">психологи</a></li>
+            <li><a href="#" class="div">чат</a></li>
+            <li><a href="#" class="text-wrapper-2">профіль</a></li>
+          </ul>
+        </nav>
+        <a href="tel:+380000000000" class="call-icon" aria-label="Зателефонувати">
+          <img
+            class="phone-call-img"
+            src="https://c.animaapp.com/m8of8lb90J94Ha/img/phone-call-img.png"
+            alt="Іконка телефону"
+          />
+        </a>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Profile Section: Profile Picture & Personal Info Form -->
+      <section class="profile-section">
+        <div class="profile-image-container">
+          <!-- Replace soldier-profile.jpg with your actual image path -->
+          <img 
+            src="soldier-profile.jpg" 
+            alt="Profile Photo" 
+            class="profile-image"
+          />
+          <h2 class="profile-name">Депутат Іван</h2>
+          <p class="profile-rank">бойовий</p>
+        </div>
+        
+        <div class="info-section">
+          <h2 class="info-title">Особиста інформація</h2>
+          <form class="info-form">
+            <div class="form-row">
+              <input 
+                type="text" 
+                name="lastName" 
+                placeholder="Прізвище" 
+                class="input-field"
+              />
+              <input 
+                type="text" 
+                name="firstName" 
+                placeholder="Ім'я" 
+                class="input-field"
+              />
+            </div>
+            <div class="form-row">
+              <input 
+                type="text" 
+                name="nickname" 
+                placeholder="Позивний" 
+                class="input-field"
+              />
+              <input 
+                type="email" 
+                name="email" 
+                placeholder="E-mail" 
+                class="input-field"
+              />
+            </div>
+            <input 
+              type="text" 
+              name="location" 
+              placeholder="Місто, країна" 
+              class="input-field full-width"
+            />
+            <textarea 
+              name="problems" 
+              rows="2" 
+              placeholder="Проблеми"
+              class="input-field"
+            ></textarea>
+            <button type="submit" class="submit-btn">Змінити</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
