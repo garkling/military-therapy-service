@@ -1,0 +1,122 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fdf6ee;
+    margin: 0;
+}
+
+h2 {
+    color: #493222;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 12px;
+    background: #A2B08D;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    width: 70%; 
+    max-width: 280px;
+}
+
+button:hover {
+    background: #d7dccb;
+}
+
+.google-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    max-width: 280px;
+    margin: 10px auto;
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    gap: 8px;
+    color: #493222;
+}
+
+.google-login img {
+    width: 18px;
+    height: 18px;
+    order: 1;
+}
+
+.google-login:hover {
+    background: #f0f0f0; 
+}
+
+.main-button {
+    width: 70%;
+    max-width: 200px;
+    font-size: 16px;
+}
+
+.signup-link, .forgot-password {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.signup-link a, .forgot-password a {
+    color: #493222;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.signup-link a:hover, .forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 15px; /* Adjust spacing from elements above */
+    font-size: 10px;
+    color: #5a3e2b;
+}
+
+.create-account {
+    display: block;
+    text-align: center;
+    margin-top: -8px; /* Reduce space between "Забули пароль?" and this */
+    font-size: 10px;
+    color: #5a3e2b;
+}
+
+.create-account a {
+    color: #5a3e2b; /* Change this to your desired color */
+    text-decoration: none; /* Removes underline */
+    font-weight: bold; /* Makes it bold */
+}
+
+.create-account a:hover {
+    color: #5a3e2b; /* Changes color on hover */
+    text-decoration: underline; /* Adds underline on hover */
+}
