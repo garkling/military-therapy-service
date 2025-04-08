@@ -1,0 +1,66 @@
+/* styles.css */
+
+/* 1) Глобальні стилі для <body>, щоб фон був кремового кольору */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFF9F2; /* м'який кремовий колір */
+    font-family: 'Arial', sans-serif; /* або будь-який інший шрифт */
+  }
+  
+  /* 2) Контейнер, що вирівнює все по центру вертикально і горизонтально */
+  .center-container {
+    display: flex;
+    justify-content: center;  /* по горизонталі */
+    align-items: center;      /* по вертикалі */
+    min-height: 100vh;        /* займає всю висоту екрану */
+  }
+  
+ 
+  .form-box {
+    background-color: #FFFFFF;
+    padding: 40px;             /* відступи всередині */
+    border-radius: 6px;        /* трохи заокруглені кути */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* легка тінь */
+    width: 320px;              /* приблизна ширина */
+    text-align: center;        /* вирівнює текст та елементи всередині по центру */
+  }
+  
+  /* 4) Заголовок */
+  .form-box h2 {
+    margin: 0 0 24px 0;        /* відступи знизу */
+    font-size: 1.5rem;
+    color: #4A4A4A;            /* темно-сірий текст */
+  }
+  
+  /* 5) Поля вводу з лінією замість повної рамки */
+  .form-box input {
+    display: block;            /* щоб кожен input був з нового рядка */
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 8px 0;
+    font-size: 1rem;
+    color: #4A4A4A;            /* колір тексту всередині інпуту */
+    background-color: transparent;
+    border: none;              /* прибираємо бордер */
+    border-bottom: 1px solid #9C8C71; /* кольорова лінія (наприклад, під колір кнопки) */
+    outline: none;             /* прибирає рамку при фокусі */
+  }
+  
+  /* 6) Стиль кнопки */
+  .form-box button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    background-color: #A2B08D; /* зеленувато-оливковий колір (можна змінити) */
+    color: #FFFFFF;           /* білий текст */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Ефект при наведенні миші */
+  .form-box button:hover {
+    background-color: #857659; /* темніший відтінок */
+  }
+  
