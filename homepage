@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Therapy Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-bg: #f2f2f2;
+      --header-bg: #cdd0b6;
+      --button-bg: #a7ad8e;
+      --text-main: #222;
+      --text-accent: #1e3524;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: var(--main-bg);
+      color: var(--text-main);
+      position: relative;
+    }
+
+    header {
+      background-color: var(--header-bg);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-transform: lowercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #000;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .bg-glow {
+      position: absolute;
+      top: 20%;
+      right: 5%;
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      opacity: 0.25;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+      filter: blur(4px);
+    }
+
+    main {
+      display: flex;
+      flex-direction: row;
+      min-height: calc(100vh - 80px);
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .content-left {
+      flex: 1 1 50%;
+      padding: 2rem;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .content-right {
+      flex: 1 1 50%;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .content-left h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .content-left p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .content-left button {
+      background-color: var(--button-bg);
+      color: #000;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s;
+      font-weight: 500;
+    }
+
+    .content-left button:hover {
+      background-color: #939b79;
+    }
+
+    .quote {
+      font-size: 1.8rem;
+      color: var(--text-accent);
+      font-weight: 500;
+      text-align: center;
+      max-width: 400px;
+      padding: 1rem;
+    }
+
+    @media (max-width: 992px) {
+      main {
+        flex-direction: column;
+      }
+
+      .content-left,
+      .content-right {
+        flex: 1 1 100%;
+        width: 100%;
+      }
+
+      .quote {
+        font-size: 1.5rem;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .bg-glow {
+        top: 70%;
+        right: 0;
+        left: auto;
+        max-width: 300px;
+        filter: blur(6px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .content-left h1 {
+        font-size: 1.5rem;
+      }
+
+      .content-left p {
+        font-size: 1rem;
+      }
+
+      .quote {
+        font-size: 1.2rem;
+      }
+
+      .content-left button {
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">therapy platform</div>
+    <nav>
+      <a href="#">Психологи</a>
+      <a href="#">Чат</a>
+      <a href="#">Профіль</a>
+    </nav>
+  </header>
+
+  <img src="homepage_image.png" alt="" class="bg-glow">
+
+  <main>
+    <div class="content-left">
+      <h1>Психологічна підтримка для тих,<br>хто пройшов через війну</h1>
+      <p>Повернення з війни — це ще один бій, який часто не видно зовні. Ми створили цю платформу, щоб ви могли знайти фахівця, який дійсно знає, що таке травма, тиша після бою, ніч без сну. Тут немає формальностей чи осуду — лише допомога. Безпечно. Конфіденційно. Професійно.</p>
+      <button>Обрати психотерапевта</button>
+    </div>
+    <div class="content-right">
+      <div class="quote">
+        Ти не сам.<br>
+        Допомога поруч.
+      </div>
+    </div>
+  </main>
+</body>
+</html>
