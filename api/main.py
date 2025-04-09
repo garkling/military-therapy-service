@@ -1,8 +1,10 @@
 import uvicorn
-from api.config import conf
-from api.router import main_router
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+
+from api.base.db import init_db
+from api.config import conf
+from api.router import main_router
 
 
 def get_app() -> FastAPI:
@@ -27,9 +29,10 @@ async def health():
 
 
 def start_local():
+    """Launched with `poetry run api` at root level"""
     import sys
     import re
-    """Launched with `poetry run api` at root level"""
+    init_db()
 
     host = '127.0.0.1'
     port = 8080
