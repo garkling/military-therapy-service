@@ -2,9 +2,10 @@ from enum import StrEnum
 from functools import cached_property
 
 from pydantic import computed_field
-from sqlmodel import Field
+from sqlmodel import Field, Relationship
 
 from api.base.model import Base
+from api.profiles.models import TherapistExpertiseMap
 
 
 class UserRole(StrEnum):
@@ -30,20 +31,18 @@ class User(Base):
 
 class Therapist(User, table=True):
     age: int
+    education: str
     experience: int
     verified: bool = Field(default=False)
-    expertise: str
     location: str
+
+    expertises: list['TherapistExpertise'] = Relationship(back_populates="therapists", link_model=TherapistExpertiseMap)
+
     role: UserRole = UserRole.THERAPIST
 
 
 class Military(User, table=True):
     age: int
     location: str
-    position: str
 
     role: UserRole = UserRole.MILITARY
-
-
-class Admin(User, table=True):
-    pass

@@ -48,6 +48,7 @@ async def verify_access_token(
 ) -> User:
     try:
         access_token = auth_header.credentials
+        print(access_token)
         decoded = jwt_guard.verify_access_token(access_token)
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token expired")

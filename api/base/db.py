@@ -22,5 +22,9 @@ def get_db_session():
 
 
 def init_db():
-    from api.user.models import Military, Therapist, Admin      # type: ignore
+    from api.user.models import Military, Therapist
+    from api.profiles.models import MilitaryProfile, TherapistExpertise
+    from api.profiles.common import TherapistExpertiseMap
+    from api.assessment.models import AssessmentTestResults
+
     SQLModel.metadata.create_all(engine)
