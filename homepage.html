@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Therapy Platform</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comfortaa', sans-serif;
+      background: #333;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: linear-gradient(to bottom right, #f9fdf6, #bde2be);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+
+    .nav {
+      background: #c2c9ae;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 18px;
+      border-bottom: 1px solid #aaa;
+    }
+
+    .nav .menu {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .nav .menu a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .nav .logo {
+      line-height: 1.4;
+      font-size: 14px;
+    }
+
+    .burger {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+      gap: 3rem;
+    }
+
+    .tagline {
+      font-size: 32px;
+      font-family: 'Anonymous Pro', monospace;
+      line-height: 1.8;
+      padding-left: 4rem;
+    }
+
+    .description {
+      font-size: 20px;
+      line-height: 1.9;
+      font-family: 'Comfortaa', sans-serif;
+      max-width: 700px;
+    }
+
+    .cta {
+      margin-top: 2rem;
+    }
+
+    .cta button {
+      background-color: #c2c9ae;
+      border: none;
+      padding: 1rem 1.8rem;
+      border-radius: 1rem;
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 20px;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+
+    .message {
+      font-size: 30px;
+      font-family: 'Anonymous Pro', monospace;
+      text-align: right;
+      margin-top: auto;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .nav .menu {
+        display: none;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .message {
+        text-align: left;
+        font-size: 22px;
+      }
+
+      .cta {
+        text-align: left;
+      }
+
+      .content {
+        padding: 2rem;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="burger">☰</div>
+      <div class="logo">therapy<br>platform</div>
+      <div class="menu">
+        <a href="#">Психологи</a>
+        <a href="#">Чат</a>
+        <a href="#">Профіль</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="tagline">
+        Психологічна підтримка для тих,<br>
+        хто пройшов через війну
+      </div>
+
+      <div class="description">
+        <strong>Повернення з війни</strong> — це ще один бій, який часто не видно ззовні. Ми створили цю платформу, щоб ви могли знайти фахівця, який дійсно знає, що таке травма, тиша після бою, ніч без сну. Тут немає формальностей чи осуду — лише допомога.<br>
+        Безпечно. Конфіденційно. Професійно.
+      </div>
+
+      <div class="cta">
+        <button>Обрати психотерапевта</button>
+      </div>
+
+      <div class="message">
+        Ти не сам.<br>
+        Допомога поруч.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
