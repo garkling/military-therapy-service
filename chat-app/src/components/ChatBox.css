@@ -1,0 +1,28 @@
+.input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #F7FBF1;
+    border-top: 1px solid #F7FBF1;
+    position: fixed;
+    bottom: 0;
+    left: 19%;
+    width: 81%;
+    box-sizing: border-box;
+}
+
+.input-container input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #F7FBF1;
+    margin-right: 10px;
+}
+
+.send-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
