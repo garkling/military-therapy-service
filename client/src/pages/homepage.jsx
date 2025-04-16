@@ -11,9 +11,8 @@ const Homepage = () => {
         <nav className="nav">
           <div className="nav-left">
             <button className="burger">☰</button>
-            <div className="logo">
-              therapy<br />platform
-            </div>
+              <div className="logo">PHOENIX</div>
+
           </div>
           <div className="nav-right">
             <div className="menu">

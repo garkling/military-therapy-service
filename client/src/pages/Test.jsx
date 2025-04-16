@@ -1,6 +1,6 @@
 // src/pages/Test.jsx
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const questions = [
   {
@@ -62,9 +62,11 @@ const questions = [
 ];
 
 export default function Test() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const location = useLocation();
+  // Отримуємо firstName з location.state, якщо воно передано
   const firstName = location.state?.firstName || "";
 
   const handleOptionClick = (option) => {
@@ -77,8 +79,9 @@ export default function Test() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      alert("Дякуємо за проходження тесту!");
       console.log("Відповіді:", answers);
+      // Після проходження всіх питань переходимо на сторінку з терапевтами
+      navigate("/therapists");
     }
   };
 
@@ -121,6 +124,23 @@ export default function Test() {
       </div>
 
       <style jsx>{`
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #FFF9F2;
+            padding: 20px;
+          }
+        .form-box {
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          text-align: center;
+          max-width: 400px;
+          width: 100%;
+        }
         .options {
           margin-top: 20px;
         }
@@ -153,7 +173,7 @@ export default function Test() {
         }
         .back {
           background-color: #b6d6f2;
-          color: #b6d6f2;
+          color: #333;
         }
         .next {
           background-color: #aab08f;

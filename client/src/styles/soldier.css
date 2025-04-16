@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Anonymous+Pro:wght@400;700&display=swap');
+
+
+/* ----------------------------- */
+/*      COLOR & FONT SETUP       */
+/* ----------------------------- */
+:root {
+    /* Backgrounds */
+    --sidebar-bg: #d7e5ef;       /* Light bluish sidebar */
+    --main-bg: #f8f3eb;          /* Light beige main background */
+    
+    /* Input + Button Colors */
+    --input-bg: #d8e2dc;         /* Pastel teal for inputs */
+    --button-bg: #A2B08D;        /* Slightly darker teal for button */
+    
+    /* Text Colors */
+    --text-color: #333;
+    --placeholder-color: #555;
+    
+    /* Font */
+    --font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  /* ----------------------------- */
+  /*      GLOBAL RESETS            */
+  /* ----------------------------- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-family);
+    background-color: var(--main-bg);
+    color: var(--text-color);
+  }
+  
+  /* ----------------------------- */
+  /*      LAYOUT WRAPPERS          */
+  /* ----------------------------- */
+  .page-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* ----------------------------- */
+  /*          SIDEBAR            */
+  /* ----------------------------- */
+  .sidebar {
+    width: 293px;
+    background-color: #a2b08d;
+    box-shadow: 0px 4px 4px #00000040;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .overlap-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 35px 0;
+  }
+  
+  .platform-name {
+    font-family: "Montserrat", Helvetica, monospace;
+    font-weight: 400;
+    color: #000;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .nav li {
+    margin-bottom: 20px;
+  }
+  
+  .nav a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #000;
+    font-size: 32px;
+    text-align: center;
+    transition: color 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .nav a:hover,
+  .nav a:focus {
+    color: #fff;
+  }
+  
+  .call-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    margin-left: 44px;
+    background-color: #f7fbf1;
+    border-radius: 32px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .call-icon:hover,
+  .call-icon:focus {
+    background-color: #e0e7d7;
+  }
+  
+  /* ----------------------------- */
+  /*         MAIN CONTENT          */
+  /* ----------------------------- */
+  /* Main content starts exactly 95px to the right of the sidebar */
+  
+  .main-content {
+    margin-left: calc(293px + 95px);
+    padding: 2rem;
+    background-color: var(--main-bg);
+    width: calc(100% - (293px + 95px));
+  }
+  
+  /* ----------------------------- */
+  /*       PROFILE SECTION         */
+  /* ----------------------------- */
+  .profile-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 95px; /* 95px gap between the profile image container and the info form */
+  }
+  
+  /* Profile Image Container */
+  .profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  /* Profile picture with 15px margin below it */
+  .profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  
+  .profile-name {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Anonymous Pro', monospace;
+  }
+  
+  .profile-rank {
+    font-size: 1rem;
+    color: #666;
+    font-family: 'Anonymous Pro', monospace;
+  }
+  
+  /* Info Section positioned exactly 104px from the top of the website */
+  .info-section {
+    flex: 1;
+    margin-top: 50px;
+  }
+  
+  .info-title {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-family: 'Anonymous Pro', monospace;
+  }
+  
+  /* ----------------------------- */
+  /*         INFO FORM             */
+  /* ----------------------------- */
+  .info-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .input-field {
+    flex: 1;
+    padding: 10px;
+    margin-bottom: 53px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #d8e2dc;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  textarea.input-field {
+    resize: none;
+    height: auto;
+    min-height: 160px;
+  }
+  
+  .submit-btn {
+    background-color: var(--button-bg);
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.2s ease;
+    width: 200px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #b5d8d6;
+  }
+  
+  /* ----------------------------- */
+  /*       RESPONSIVE DESIGN       */
+  /* ----------------------------- */
+  @media (max-width: 768px) {
+    .page-container {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+    }
+  
+    .main-content {
+      margin-left: 0;
+      padding: 1rem;
+      width: 100%;
+    }
+  
+    .profile-section {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+  
+    .info-form {
+      width: 100%;
+    }
+  
+    .form-row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
