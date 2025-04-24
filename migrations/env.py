@@ -2,18 +2,12 @@ import logging
 import sys
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
-from alembic import context
 from sqlmodel import SQLModel
 
 from api.config import conf
-
-from api.user.models import Military, Therapist
-from api.profiles.models import MilitaryProfile, TherapistExpertise
-from api.profiles.common import TherapistExpertiseMap
-from api.assessment.models import AssessmentTestResults
 
 config = context.config
 

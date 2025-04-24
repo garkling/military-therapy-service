@@ -1,16 +1,19 @@
-from pydantic import BaseModel, model_validator, field_validator, ConfigDict
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import field_validator
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlmodel import Field
 
 from api.base.model import Base
 
 
-class AssessmentTestResults(Base, table=True):
+class TestAssessmentResult(Base, table=True):
     __tablename__ = "assessment_test_results"
     test_id: str = Field(primary_key=True)
     military_id: str = Field(foreign_key="military.id", primary_key=True)
-    answers: dict = Field(sa_type=JSONB, nullable=False)
-    score: float
+    answers: list[dict] = Field(sa_type=JSONB, nullable=False)
+    expertise_codes: list[int] = Field(sa_type=JSONB, nullable=False)
+    score: int
 
 
 class TestQuestion(BaseModel):
@@ -28,12 +31,10 @@ class AssessmentTest(BaseModel):
 
     @field_validator('gradation', mode='before')
     def validate_gradation(cls, gradation: dict[str, str], values):
-        gradation = {
+        return {
             range(*map(int, range_.split("-"))): scores
             for range_, scores in gradation.items()
         }
-
-        return gradation
 
     def get_question_by_id(self, q_id: int):
         for question in self.questions:

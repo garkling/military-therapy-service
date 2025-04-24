@@ -1,9 +1,15 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class TestQuestionRead(BaseModel):
     id: int
     content: str
+
+
+class TestRead(BaseModel):
+    id: str
+    questions: list[TestQuestionRead]
 
 
 class TestQuestionResult(BaseModel):

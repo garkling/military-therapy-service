@@ -2,7 +2,8 @@ from enum import StrEnum
 from functools import cached_property
 
 from pydantic import computed_field
-from sqlmodel import Field, Relationship
+from sqlmodel import Field
+from sqlmodel import Relationship
 
 from api.base.model import Base
 from api.profiles.models import TherapistExpertiseMap
@@ -18,10 +19,10 @@ class User(Base):
     id: str = Field(primary_key=True)
     first_name: str
     last_name: str
-    email: str | None = Field(default=None)
-    phone: str | None = Field(default=None)
+    email: str | None = Field(default=None, unique=True)
+    phone: str | None = Field(default=None, unique=True)
 
-    role: UserRole
+    role: UserRole = Field(nullable=False)
 
     @computed_field
     @cached_property
@@ -30,6 +31,8 @@ class User(Base):
 
 
 class Therapist(User, table=True):
+    __tablename__ = "therapists"
+
     age: int
     education: str
     experience: int
@@ -42,6 +45,8 @@ class Therapist(User, table=True):
 
 
 class Military(User, table=True):
+    __tablename__ = "military"
+
     age: int
     location: str
 

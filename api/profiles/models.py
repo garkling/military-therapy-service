@@ -1,8 +1,11 @@
-from sqlmodel import Field, Relationship
+from sqlmodel import Field
+from sqlmodel import Relationship
 
 from api.base.model import Base
 from api.profiles.common import TherapistExpertiseMap
-from api.profiles.const import MarriageStatus, Gender, TherapistExpertiseEnum
+from api.profiles.const import Gender
+from api.profiles.const import MarriageStatus
+from api.profiles.const import TherapistExpertiseEnum
 
 
 class TherapistExpertise(Base, table=True):

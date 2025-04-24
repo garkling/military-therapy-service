@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
-from api.profiles.models import Gender, MarriageStatus
+from api.profiles.models import Gender
+from api.profiles.models import MarriageStatus
 
 
 class MilitaryProfileCreate(BaseModel):
@@ -14,3 +15,18 @@ class MilitaryProfileCreate(BaseModel):
     complains: str
     insecures: str
     anxieties: str
+
+
+class TherapistProfileView(BaseModel):
+    id: str
+    first_name: str
+    last_name: str
+    email: str | None
+    phone: str | None
+
+    age: int
+    education: str
+    experience: str
+    location: str
+
+    expertises: list[str]

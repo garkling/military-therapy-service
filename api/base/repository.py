@@ -5,6 +5,7 @@ from typing import Optional
 from typing import TypeVar
 
 from fastapi import Depends
+from sqlmodel import select
 from sqlmodel import Session
 from sqlmodel import SQLModel
 
@@ -16,7 +17,7 @@ ModelType = TypeVar("ModelType", bound=SQLModel)
 
 
 class BaseRepository(Generic[ModelType]):
-    _model: ModelType | None = None
+    _model: ModelType
 
     def __init__(self, session: Annotated[Session, Depends(get_db_session)]):
         self.session = session
@@ -39,6 +40,10 @@ class BaseRepository(Generic[ModelType]):
     def delete(self, instance: ModelType) -> None:
         self.session.delete(instance)
         self.session.commit()
+
+    def list(self) -> list[ModelType]:
+        items = self.session.exec(select(self._model)).all()
+        return [self._model.model_validate(item) for item in items]
 
     def __init_subclass__(cls, **kwargs):
         base = [

@@ -9,7 +9,8 @@ from api.auth.guards import APIGuard
 from api.auth.guards import FirstLoginGuard
 from api.user.dto import MilitaryUserCreate
 from api.user.dto import MilitaryUserRead
-from api.user.services.user_service import UserService
+from api.user.services import MilitaryService
+from api.user.services import UserService
 
 router = APIRouter(prefix='/user')
 
@@ -19,11 +20,13 @@ class UserController:
     def __init__(
         self,
         user_service: Annotated[UserService, Depends()],
+        military_service: Annotated[MilitaryService, Depends()],
     ):
         self._user_service = user_service
+        self._military_service = military_service
 
     def create_user(self, auth0_info: Auth0UserInfo, user_create: MilitaryUserCreate) -> MilitaryUserRead:
-        created = self._user_service.create(
+        created = self._military_service.create(
             user_id=auth0_info.id,
             email=auth0_info.email,
             **user_create.model_dump()

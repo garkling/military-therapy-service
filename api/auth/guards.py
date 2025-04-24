@@ -11,7 +11,7 @@ from fastapi.security import HTTPBearer
 from api.auth.dto import Auth0UserInfo
 from api.config import conf
 from api.user.models import User
-from api.user.services.user_service import UserService
+from api.user.services import UserService
 
 Users = asyncify(auth0.authentication.users.Users)
 auth0_user_client = Users(conf.AUTH0_DOMAIN)
@@ -48,7 +48,6 @@ async def verify_access_token(
 ) -> User:
     try:
         access_token = auth_header.credentials
-        print(access_token)
         decoded = jwt_guard.verify_access_token(access_token)
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token expired")
