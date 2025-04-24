@@ -7,7 +7,7 @@
 :root {
     /* Backgrounds */
     --sidebar-bg: #d7e5ef;       /* Light bluish sidebar */
-    --main-bg: #f8f3eb;          /* Light beige main background */
+    --main-bg: #FFF9F2;          /* Light beige main background */
     
     /* Input + Button Colors */
     --input-bg: #d8e2dc;         /* Pastel teal for inputs */
@@ -30,13 +30,11 @@
     box-sizing: border-box;
   }
   
-  html, body {
-    width: 100%;
+  html, body, #root {
     height: 100%;
-    font-family: var(--font-family);
-    background-color: var(--main-bg);
-    color: var(--text-color);
+    margin: 0;
   }
+  
   
   /* ----------------------------- */
   /*      LAYOUT WRAPPERS          */
@@ -44,6 +42,7 @@
   .page-container {
     display: flex;
     min-height: 100vh;
+    background-color: var(--main-bg); /* Тепер весь контейнер бежевий */
   }
   
   /* ----------------------------- */
