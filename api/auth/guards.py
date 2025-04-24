@@ -11,7 +11,7 @@ from fastapi.security import HTTPBearer
 from api.auth.dto import Auth0UserInfo
 from api.config import conf
 from api.user.models import User
-from api.user.services.user_service import UserService
+from api.user.services import UserService
 
 Users = asyncify(auth0.authentication.users.Users)
 auth0_user_client = Users(conf.AUTH0_DOMAIN)

@@ -2,6 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from api.base.db import destroy_db
 from api.base.db import init_db
 from api.config import conf
 from api.router import main_router
@@ -30,14 +31,9 @@ async def health():
 
 def start_local():
     """Launched with `poetry run api` at root level"""
-    import sys
-    import re
+    destroy_db()
     init_db()
 
-    host = '127.0.0.1'
     port = 8080
-    if len(sys.argv) > 1:
-        if match := re.match(r"\d{4,5}", sys.argv[1]):
-            port = int(match.group(0))
-
+    host = '127.0.0.1'
     uvicorn.run("api.main:app", host=host, port=port, reload=True)
