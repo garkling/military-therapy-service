@@ -19,6 +19,7 @@ auth0_user_client = Users(conf.AUTH0_DOMAIN)
 
 async def get_user_info(access_token: str) -> Auth0UserInfo:
     res = await auth0_user_client.userinfo_async(access_token)
+    print(res)
     return Auth0UserInfo.model_validate(res)
 
 

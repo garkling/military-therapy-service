@@ -4,6 +4,7 @@ from fastapi import Depends
 
 from api.profiles.models import MilitaryProfile
 from api.profiles.repository import MilitaryProfileRepository
+from api.utils.utils import get_current_date_iso_string
 
 
 class MilitaryProfileService:
@@ -19,3 +20,14 @@ class MilitaryProfileService:
         self._repo.create(profile)
 
         return profile
+
+    def get(self, user_id: str) -> MilitaryProfile:
+        profile = self._repo.get(user_id)
+        return profile
+
+    def update(self, user_id: str, **updates) -> MilitaryProfile:
+        profile = self._repo.get(user_id)
+        profile.update_attributes(**updates)
+        profile.updated_at = get_current_date_iso_string()
+        updated = self._repo.update(profile)
+        return updated

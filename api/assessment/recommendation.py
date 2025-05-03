@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import Depends
 
 from api.user.models import Therapist
-from api.user.repositories.repositories import TherapistRepository
+from api.user.repositories import TherapistRepository
 
 
 class TherapistRecommendationService:

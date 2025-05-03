@@ -34,6 +34,6 @@ def start_local():
     destroy_db()
     init_db()
 
-    port = 8080
+    port = 8085
     host = '127.0.0.1'
     uvicorn.run("api.main:app", host=host, port=port, reload=True)

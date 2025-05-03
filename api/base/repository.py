@@ -10,6 +10,7 @@ from sqlmodel import Session
 from sqlmodel import SQLModel
 
 from api.base.db import get_db_session
+from api.base.errors import handle_db_errors
 from api.logger import get_logger
 
 logger = get_logger(__name__)
@@ -22,6 +23,7 @@ class BaseRepository(Generic[ModelType]):
     def __init__(self, session: Annotated[Session, Depends(get_db_session)]):
         self.session = session
 
+    @handle_db_errors
     def create(self, instance: ModelType) -> ModelType:
         self.session.add(instance)
         self.session.commit()

@@ -31,3 +31,4 @@ pre-commit = "^4.2.0"
 
 [tool.poetry.scripts]
 api = "api.main:start_local"
+openapi = "scripts.openapi:generate_openapi"
