@@ -68,3 +68,21 @@ class TherapistUserUpdate(UserUpdateBase):
 
 
 UserUpdate = MilitaryUserUpdate | TherapistUserUpdate
+
+
+class TherapistCreate(BaseModel):
+    user_id: str
+    first_name: str
+    last_name: str
+    email: str
+    phone: str | None = None
+
+    age: int
+    location: str
+
+    education: str
+    experience: int
+    verified: bool = True
+
+    def extract(self):
+        return self.model_dump(exclude_unset=True)

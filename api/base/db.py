@@ -28,6 +28,7 @@ def init_db():
     from api.profiles.models import MilitaryProfile, TherapistExpertise
     from api.profiles.common import TherapistExpertiseMap
     from api.assessment.models import TestAssessmentResult
+    from api.chats.models import ChatRoom, ChatMessage
 
     SQLModel.metadata.create_all(engine)
 
@@ -37,5 +38,6 @@ def destroy_db():
     from api.profiles.models import MilitaryProfile, TherapistExpertise
     from api.profiles.common import TherapistExpertiseMap
     from api.assessment.models import TestAssessmentResult
+    from api.chats.models import ChatRoom, ChatMessage
 
     SQLModel.metadata.drop_all(engine)

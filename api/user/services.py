@@ -80,6 +80,20 @@ class TherapistService:
     ):
         self._repo = repo
 
+    def create(
+        self,
+        user_id: str,
+        email: str,
+        **user_create
+    ):
+        user = Therapist(
+            id=user_id,
+            email=email,
+            **user_create
+        )
+        self._repo.create(user)
+        return user
+
     def update(
         self,
         user_id: str,
