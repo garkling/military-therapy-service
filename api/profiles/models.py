@@ -19,8 +19,6 @@ class TherapistExpertise(Base, table=True):
 class MilitaryProfile(Base, table=True):
     user_id: str = Field(foreign_key="military.id", primary_key=True)
     gender: Gender | None = Field(default=None)
-    age: int
-    position: str
     about: str
     marriage_status: MarriageStatus = Field(default=MarriageStatus.SINGLE)
     kids: int = Field(default=0)

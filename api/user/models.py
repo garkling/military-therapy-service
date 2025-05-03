@@ -49,5 +49,6 @@ class Military(User, table=True):
 
     age: int
     location: str
+    rank: str | None = None
 
     role: UserRole = UserRole.MILITARY
