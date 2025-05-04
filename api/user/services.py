@@ -26,6 +26,11 @@ class UserService:
         return (self._military_repo.get(user_id)
                 or self._therapist_repo.get(user_id))
 
+    def list_by_ids(self, user_ids: list[str]) -> list[Military | Therapist]:
+        therapists = self._therapist_repo.batch_get(user_ids)
+        militaries = self._military_repo.batch_get(user_ids)
+        return [*therapists, *militaries]
+
     def delete(self, user_id: str) -> Military | Therapist | None:
         user = self.get(user_id)
         if not user:

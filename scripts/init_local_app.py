@@ -56,7 +56,7 @@ def create_therapists():
 
 def init():
     create_expertises()
-    create_therapists()
+    # create_therapists()
 
 
 if __name__ == '__main__':

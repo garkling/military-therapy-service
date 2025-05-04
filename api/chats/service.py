@@ -7,6 +7,7 @@ from api.chats.models import ChatRoom
 from api.chats.repository import ChatMessageRepository
 from api.chats.repository import ChatRepository
 from api.user.models import Military
+from api.user.models import Therapist
 from api.user.models import User
 from api.utils.utils import get_current_date_iso_string
 
@@ -25,19 +26,22 @@ class ChatRoomService:
         self,
         therapist_id: str,
         military_id: str,
-    ) -> dict:
+    ) -> ChatRoom:
         if chat_id := self._chat_repository.check_if_chat_exists(therapist_id, military_id):
-            return self.get_chat_room_with_latest_messages(chat_id)
+            return self.get_chat_or_raise(chat_id)
 
         chat = ChatRoom(therapist_id=therapist_id, military_id=military_id)
         self._chat_repository.create(chat)
-        return dict(chat=chat)
+        return chat
 
     def refresh_chat(self, chat: ChatRoom, message_id: str) -> ChatRoom:
         chat.last_updated_at = get_current_date_iso_string()
         chat.last_message_id = message_id
         self._chat_repository.update(chat)
         return chat
+
+    def get_chat_or_raise(self, chat_id: str) -> ChatRoom:
+        return self._chat_repository.get_or_raise(chat_id)
 
     def get_chat_room_with_latest_messages(
         self,
@@ -53,7 +57,7 @@ class ChatRoomService:
         if user.role == Military:
             return self._chat_repository.list_chats_by(Military, user.id)
         else:
-            return self._chat_repository.list_chats_by(Military, user.id)
+            return self._chat_repository.list_chats_by(Therapist, user.id)
 
 
 class ChatMessageService:
