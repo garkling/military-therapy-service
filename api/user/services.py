@@ -4,6 +4,7 @@ from fastapi import Depends
 from fastapi import HTTPException
 from starlette import status
 
+from api.profiles.repository import TherapistExpertiseRepository
 from api.user.models import Military
 from api.user.models import Therapist
 from api.user.models import UserRole
@@ -81,9 +82,11 @@ class MilitaryService:
 class TherapistService:
     def __init__(
         self,
-        repo: Annotated[TherapistRepository, Depends()]
+        repo: Annotated[TherapistRepository, Depends()],
+        expertise_repo: Annotated[TherapistExpertiseRepository, Depends()]
     ):
-        self._repo = repo
+        self._therapist_repo = repo
+        self._expertise_repo = expertise_repo
 
     def create(
         self,
@@ -91,12 +94,14 @@ class TherapistService:
         email: str,
         **user_create
     ):
+        expertises = user_create.pop("expertises", None)
         user = Therapist(
             id=user_id,
             email=email,
             **user_create
         )
-        self._repo.create(user)
+        user = self._therapist_repo.create(user)
+        self.update_expertises(user, expertises)
         return user
 
     def update(
@@ -104,8 +109,17 @@ class TherapistService:
         user_id: str,
         **updates
     ) -> Therapist:
-        therapist = self._repo.get(user_id)
+        therapist = self._therapist_repo.get(user_id)
+        self.update_expertises(therapist, updates.pop('expertises', None))
         therapist.update_attributes(**updates)
         therapist.updated_at = get_current_date_iso_string()
-        self._repo.update(therapist)
+        self._therapist_repo.update(therapist)
         return therapist
+
+    def update_expertises(self, user: Therapist, expertises: list[int] | None):
+        if not expertises:
+            return user
+
+        user.expertises = self._expertise_repo.get_by_codes(expertises)
+        self._therapist_repo.update(user)
+        return user

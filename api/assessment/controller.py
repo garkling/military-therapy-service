@@ -2,17 +2,19 @@ from typing import Annotated
 
 from fastapi import APIRouter
 from fastapi import Depends
+from starlette import status
 
 from api.assessment.dto import TestQuestionRead
 from api.assessment.dto import TestQuestionResult
 from api.assessment.dto import TestRead
+from api.assessment.errors import ErrorHandlingRoute
 from api.assessment.evaluation import TestEvaluationService
 from api.assessment.recommendation import TherapistRecommendationService
 from api.auth.guards import APIGuard
 from api.profiles.dto import TherapistProfileView
 from api.user.models import User
 
-router = APIRouter(prefix='/assessment')
+router = APIRouter(prefix='/assessment', route_class=ErrorHandlingRoute)
 
 
 class AssessmentController:
@@ -46,19 +48,32 @@ class AssessmentController:
 
         return [TherapistProfileView.model_validate(t) for t in therapists]
 
+    async def get_recommendations(self, user: User) -> list[TherapistProfileView]:
+        test_result = self._evaluation_service.get_results(user.id)
+        return await self.build_recommendation(test_result.expertise_codes)
 
-@router.get("")
+
+@router.get("", status_code=status.HTTP_200_OK, response_model=TestRead)
 async def get_entry_test(
     controller: Annotated[AssessmentController, Depends()]
 ) -> TestRead:
     return await controller.get_test()
 
 
-@router.post("")
+@router.post("", status_code=status.HTTP_201_CREATED, response_model=list[TherapistProfileView])
 async def submit_entry_test(
     result: list[TestQuestionResult],
     user: APIGuard,
     controller: Annotated[AssessmentController, Depends()]
-):
+) -> list[TherapistProfileView]:
     response = await controller.submit_test(result, user)
+    return response
+
+
+@router.get("/results", status_code=status.HTTP_200_OK, response_model=list[TherapistProfileView])
+async def get_recommendations(
+    user: APIGuard,
+    controller: Annotated[AssessmentController, Depends()]
+) -> list[TherapistProfileView]:
+    response = await controller.get_recommendations(user)
     return response

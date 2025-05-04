@@ -63,11 +63,11 @@ class UserController:
         return TherapistUserRead.model_validate(therapist)
 
 
-@router.get("/me", status_code=status.HTTP_200_OK, response_model=MilitaryUserRead)
+@router.get("/me", status_code=status.HTTP_200_OK, response_model=UserReadType)
 async def userinfo(
     user: APIGuard,
-) -> MilitaryUserRead:
-    return MilitaryUserRead.model_validate(user)
+) -> UserReadType:
+    return UserRead.validate_python(user)
 
 
 @router.post("", status_code=status.HTTP_201_CREATED, response_model=MilitaryUserRead)

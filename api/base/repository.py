@@ -31,7 +31,7 @@ class BaseRepository(Generic[ModelType]):
         self.session.refresh(instance)
         return instance
 
-    def get(self, pk: str) -> Optional[ModelType]:
+    def get(self, pk: str | tuple[str, str]) -> Optional[ModelType]:
         return self.session.get(self._model, pk)
 
     def get_or_raise(self, pk: str) -> ModelType:

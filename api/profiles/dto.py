@@ -1,8 +1,10 @@
 from pydantic import BaseModel
+from pydantic import field_validator
 
 from api.base.model import FromORMDto
 from api.profiles.models import Gender
 from api.profiles.models import MarriageStatus
+from api.profiles.models import TherapistExpertise
 
 
 class MilitaryProfileCreate(BaseModel):
@@ -45,7 +47,7 @@ class MilitaryProfileUpdate(BaseModel):
         return self.model_dump(exclude_unset=True)
 
 
-class TherapistProfileView(BaseModel):
+class TherapistProfileView(FromORMDto):
     id: str
     first_name: str
     last_name: str
@@ -54,7 +56,11 @@ class TherapistProfileView(BaseModel):
 
     age: int
     education: str
-    experience: str
+    experience: int
     location: str
 
-    expertises: list[str]
+    expertises: list[int]
+
+    @field_validator("expertises", mode="before")
+    def validate_expertises(cls, expertises: list[TherapistExpertise]):
+        return [e.code for e in expertises]

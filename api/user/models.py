@@ -39,7 +39,11 @@ class Therapist(User, table=True):
     verified: bool = Field(default=False)
     location: str
 
-    expertises: list['TherapistExpertise'] = Relationship(back_populates="therapists", link_model=TherapistExpertiseMap)
+    expertises: list['TherapistExpertise'] = Relationship(
+        back_populates="therapists",
+        link_model=TherapistExpertiseMap,
+        sa_relationship_kwargs={"lazy": "selectin"}
+    )
 
     role: UserRole = UserRole.THERAPIST
 
