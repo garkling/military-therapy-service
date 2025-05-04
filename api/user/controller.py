@@ -8,6 +8,7 @@ from starlette import status
 from api.auth.dto import Auth0UserInfo
 from api.auth.guards import APIGuard
 from api.auth.guards import FirstLoginGuard
+from api.errors import ErrorHandlingRoute
 from api.user.dto import MilitaryUserCreate
 from api.user.dto import MilitaryUserRead
 from api.user.dto import TherapistCreate
@@ -15,7 +16,6 @@ from api.user.dto import TherapistUserRead
 from api.user.dto import UserRead
 from api.user.dto import UserReadType
 from api.user.dto import UserUpdate
-from api.user.errors import ErrorHandlingRoute
 from api.user.models import User
 from api.user.models import UserRole
 from api.user.services import MilitaryService

@@ -13,12 +13,13 @@ from api.chats.dto import ChatRead
 from api.chats.dto import MessagePreviewRead
 from api.chats.service import ChatMessageService
 from api.chats.service import ChatRoomService
+from api.errors import ErrorHandlingRoute
 from api.pusher.client import PusherClient
 from api.user.models import User
 from api.user.models import UserRole
 from api.user.services import UserService
 
-router = APIRouter(prefix="/chats")
+router = APIRouter(prefix="/chats", route_class=ErrorHandlingRoute)
 
 
 class ChatController:

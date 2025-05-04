@@ -7,10 +7,10 @@ from starlette import status
 from api.assessment.dto import TestQuestionRead
 from api.assessment.dto import TestQuestionResult
 from api.assessment.dto import TestRead
-from api.assessment.errors import ErrorHandlingRoute
 from api.assessment.evaluation import TestEvaluationService
 from api.assessment.recommendation import TherapistRecommendationService
 from api.auth.guards import APIGuard
+from api.errors import ErrorHandlingRoute
 from api.profiles.dto import TherapistProfileView
 from api.user.models import User
 

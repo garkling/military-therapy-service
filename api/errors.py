@@ -2,12 +2,12 @@ from typing import Callable
 
 from fastapi import HTTPException
 from fastapi.routing import APIRoute
+from starlette import status
 from starlette.requests import Request
 from starlette.responses import Response
-from starlette.status import HTTP_400_BAD_REQUEST
-from starlette.status import HTTP_409_CONFLICT
 
 from api.base.errors import AlreadyExistsError
+from api.base.errors import ItemDoesNotExistError
 
 
 class ErrorHandlingRoute(APIRoute):
@@ -18,13 +18,11 @@ class ErrorHandlingRoute(APIRoute):
         async def error_handler(request: Request) -> Response:
             try:
                 return await original(request)
-
-            except (
-                AlreadyExistsError,
-
-            ) as e:
-                raise HTTPException(status_code=HTTP_409_CONFLICT, detail=str(e))
+            except AlreadyExistsError as e:
+                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+            except ItemDoesNotExistError as e:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
             except RuntimeError as e:
-                raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail=str(e))
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
         return error_handler
