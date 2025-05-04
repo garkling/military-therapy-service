@@ -7,7 +7,15 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from sqlmodel import SQLModel
 
+from api.assessment.models import TestAssessmentResult
+from api.chats.models import ChatMessage
+from api.chats.models import ChatRoom
 from api.config import conf
+from api.profiles.common import TherapistExpertiseMap
+from api.profiles.models import MilitaryProfile
+from api.profiles.models import TherapistExpertise
+from api.user.models import Military
+from api.user.models import Therapist
 
 config = context.config
 

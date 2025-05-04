@@ -24,6 +24,12 @@ class Config(BaseSettings):
     AUTH0_DOMAIN: str
     AUTH0_AUDIENCE: str
 
+    # pusher
+    PUSHER_APP_ID: str
+    PUSHER_KEY: str
+    PUSHER_SECRET: str
+    PUSHER_CLUSTER: str = 'mt1'
+
     @computed_field
     @property
     def postgresql_url(self) -> str:

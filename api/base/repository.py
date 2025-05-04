@@ -11,6 +11,7 @@ from sqlmodel import SQLModel
 
 from api.base.db import get_db_session
 from api.base.errors import handle_db_errors
+from api.base.errors import ItemDoesNotExistError
 from api.logger import get_logger
 
 logger = get_logger(__name__)
@@ -30,8 +31,15 @@ class BaseRepository(Generic[ModelType]):
         self.session.refresh(instance)
         return instance
 
-    def get(self, pk: str) -> Optional[ModelType]:
+    def get(self, pk: str | tuple[str, str]) -> Optional[ModelType]:
         return self.session.get(self._model, pk)
+
+    def get_or_raise(self, pk: str) -> ModelType:
+        item = self.get(pk)
+        if item is None:
+            raise ItemDoesNotExistError(self._model.__name__, pk)
+
+        return item
 
     def update(self, instance: ModelType) -> ModelType:
         self.session.add(instance)

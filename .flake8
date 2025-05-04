@@ -9,3 +9,4 @@ per-file-ignores =
     api/base/db.py:F401
     api/profiles/models.py:F821
     api/user/models.py:F821
+    migrations/env.py:F401

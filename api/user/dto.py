@@ -1,7 +1,9 @@
 from pydantic import BaseModel
+from pydantic import field_validator
 from pydantic import TypeAdapter
 
 from api.base.model import FromORMDto
+from api.profiles.models import TherapistExpertise
 from api.user.models import UserRole
 
 
@@ -39,7 +41,11 @@ class TherapistUserRead(UserReadBase):
     verified: bool
     location: str
 
-    expertises: list[str]
+    expertises: list[int]
+
+    @field_validator("expertises", mode="before")
+    def validate_expertises(cls, expertises: list[TherapistExpertise]):
+        return [e.code for e in expertises]
 
 
 UserReadType = MilitaryUserRead | TherapistUserRead
@@ -61,10 +67,30 @@ class MilitaryUserUpdate(UserUpdateBase):
 
 
 class TherapistUserUpdate(UserUpdateBase):
-    education: str
-    experience: int
+    education: str | None = None
+    experience: int | None = None
 
-    expertises: list[str] | None
+    expertises: list[int] | None = None
 
 
 UserUpdate = MilitaryUserUpdate | TherapistUserUpdate
+
+
+class TherapistCreate(BaseModel):
+    user_id: str
+    first_name: str
+    last_name: str
+    email: str
+    phone: str | None = None
+
+    age: int
+    location: str
+
+    education: str
+    experience: int
+    verified: bool = True
+
+    expertises: list[int] = []
+
+    def extract(self):
+        return self.model_dump(exclude_unset=True)

@@ -6,6 +6,7 @@ from fastapi import HTTPException
 from starlette import status
 
 from api.auth.guards import APIGuard
+from api.errors import ErrorHandlingRoute
 from api.profiles.dto import MilitaryProfileCreate
 from api.profiles.dto import MilitaryProfileRead
 from api.profiles.dto import MilitaryProfileUpdate
@@ -14,7 +15,7 @@ from api.user.models import Military
 from api.user.models import User
 from api.user.models import UserRole
 
-router = APIRouter()
+router = APIRouter(route_class=ErrorHandlingRoute)
 
 
 class UserProfileController:

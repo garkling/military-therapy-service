@@ -8,12 +8,14 @@ from starlette import status
 from api.auth.dto import Auth0UserInfo
 from api.auth.guards import APIGuard
 from api.auth.guards import FirstLoginGuard
+from api.errors import ErrorHandlingRoute
 from api.user.dto import MilitaryUserCreate
 from api.user.dto import MilitaryUserRead
+from api.user.dto import TherapistCreate
+from api.user.dto import TherapistUserRead
 from api.user.dto import UserRead
 from api.user.dto import UserReadType
 from api.user.dto import UserUpdate
-from api.user.errors import ErrorHandlingRoute
 from api.user.models import User
 from api.user.models import UserRole
 from api.user.services import MilitaryService
@@ -56,12 +58,16 @@ class UserController:
     async def delete_user(self, user_id: str):
         self._user_service.delete(user_id)
 
+    async def create_therapist(self, body: TherapistCreate) -> TherapistUserRead:
+        therapist = self._therapist_service.create(**body.extract())
+        return TherapistUserRead.model_validate(therapist)
 
-@router.get("/me", status_code=status.HTTP_200_OK, response_model=MilitaryUserRead)
+
+@router.get("/me", status_code=status.HTTP_200_OK, response_model=UserReadType)
 async def userinfo(
     user: APIGuard,
-) -> MilitaryUserRead:
-    return MilitaryUserRead.model_validate(user)
+) -> UserReadType:
+    return UserRead.validate_python(user)
 
 
 @router.post("", status_code=status.HTTP_201_CREATED, response_model=MilitaryUserRead)
@@ -94,3 +100,16 @@ async def delete_user(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Not enough permissions')
 
     await controller.delete_user(user_id)
+
+
+@router.post("/therapist", status_code=status.HTTP_201_CREATED, response_model=TherapistUserRead)
+async def create_therapist(
+    user: APIGuard,
+    body: TherapistCreate,
+    controller: Annotated[UserController, Depends()],
+) -> TherapistUserRead:
+    # if user.role != UserRole.ADMIN:
+    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Not enough permissions')
+
+    response = await controller.create_therapist(body)
+    return response

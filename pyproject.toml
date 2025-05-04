@@ -19,6 +19,7 @@ sqlmodel = "^0.0.24"
 sqlalchemy = "^2.0.40"
 alembic = "^1.15.2"
 faker = "^37.1.0"
+pusher = "^3.3.3"
 
 
 [build-system]

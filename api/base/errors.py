@@ -10,6 +10,13 @@ class AlreadyExistsError(RuntimeError):
         )
 
 
+class ItemDoesNotExistError(RuntimeError):
+    def __init__(self, model, pk):
+        super().__init__(
+            f"Object [{model}] pk={pk} does not exist."
+        )
+
+
 def handle_db_errors(func):
     def wrapper(self, *args, **kwargs):
         try:
