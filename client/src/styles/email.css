@@ -1,0 +1,62 @@
+/* Загальний фон сторінки */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fef7f0;
+  }
+  
+  /* Білий бокс форми */
+  .form-box {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Заголовок форми */
+  .form-box h2 {
+    font-size: 24px;
+    color: #4a3b2f;
+    margin-bottom: 30px;
+    font-weight: 500;
+  }
+  
+  /* Поле вводу email */
+  .form-box input[type="email"] {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #6b5e55;
+    margin-bottom: 25px;
+    padding: 10px 5px;
+    font-size: 16px;
+    color: #333;
+    background-color: transparent;
+    outline: none;
+  }
+  
+  /* Кнопка */
+  .form-box button {
+    background-color: #a2ab87;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .form-box button:disabled {
+    background-color: #c1c8a3;
+    cursor: default;
+  }
+  
+  .form-box button:hover:not(:disabled) {
+    background-color: #8d986f;
+  }
+  

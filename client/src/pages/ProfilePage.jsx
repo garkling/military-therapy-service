@@ -1,134 +1,58 @@
 // src/pages/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
-import "../styles/soldier.css";
-import { Link } from "react-router-dom";
+import { fetchProfile, updateProfile } from '../services/api';
+import '../styles/soldier.css';
 
-
-const ProfilePage = () => {
-  // Початковий стан для профілю з порожніми значеннями
+export default function ProfilePage() {
   const [profile, setProfile] = useState({
-    firstName: '',
-    lastName: '',
-    photo: '',
-    nickname: '',
-    email: '',
-    location: '',
-    problems: ''
+    firstName: '', lastName: '', photo: '', nickname: '', email: '', location: '', problems: ''
   });
+  const [loading, setLoading] = useState(true);
 
-  // Отримання даних з бекенду (наприклад, із URL http://localhost:3000/api/profile)
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/profile');
-        if (response.ok) {
-          const data = await response.json();
-          // Очікується, що отримані дані містять: firstName, lastName, photo, nickname, email, location, problems
-          setProfile(data);
-        } else {
-          console.error('Помилка отримання даних з бекенду');
-        }
-      } catch (error) {
-        console.error('Помилка запиту:', error);
-      }
-    };
-
-    fetchProfile();
-    // Якщо потрібно, можна періодично оновлювати дані через setInterval
-    // const interval = setInterval(fetchProfile, 10000);
-    // return () => clearInterval(interval);
+    fetchProfile()
+      .then(r => setProfile(r.data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setProfile(p => ({ ...p, [name]: value }));
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    updateProfile(profile)
+      .then(() => alert('Профіль оновлено'))
+      .catch(() => alert('Помилка оновлення'));
+  };
+
+  if (loading) return <div>Завантаження…</div>;
 
   return (
     <div className="page-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="overlap-group">
-          <h1 className="platform-name">PHOENIX</h1>
-          <nav className="nav">
-            <ul>
-              <li><Link to="/therapists" className="text-wrapper">психологи</Link></li>
-              <li><Link to="/chat" className="div">чат</Link></li>
-              <li><Link to="/profile" className="text-wrapper-2">профіль</Link></li>
-            </ul>
-          </nav>
-          <a href="tel:+380000000000" className="call-icon" aria-label="Зателефонувати">
-            <img
-              className="phone-call-img"
-              src="https://c.animaapp.com/m8of8lb90J94Ha/img/phone-call-img.png"
-              alt="Іконка телефону"
-            />
-          </a>
-        </div>
-      </aside>
-      
-      {/* Main Content */}
+      <aside>{/* sidebar */}</aside>
       <main className="main-content">
-        {/* Profile Section: Фото профілю та інформація */}
         <section className="profile-section">
           <div className="profile-image-container">
-            {/* Відображення фото (або фото за замовчуванням) */}
-            <img 
-              src={profile.photo || "https://i.pinimg.com/736x/2c/47/d5/2c47d5dd5b532f83bb55c4cd6f5bd1ef.jpg"} 
-              alt="Profile Photo" 
-              className="profile-image"
-            />
-            {/* Відображення прізвища та імені */}
-            <h2 className="profile-name">
-              {(profile.lastName || 'Депутат') + " " + (profile.firstName || 'Іван')}
-            </h2>
+            <img src={profile.photo || 'https://i.pinimg.com/…jpg'} alt="Profile" />
+            <h2>{`${profile.lastName} ${profile.firstName}`}</h2>
             <p className="profile-rank">бойовий</p>
           </div>
-          
           <div className="info-section">
-            <h2 className="info-title">Особиста інформація</h2>
-            <form className="info-form">
+            <h2>Особиста інформація</h2>
+            <form onSubmit={handleSubmit} className="info-form">
               <div className="form-row">
-                <input 
-                  type="text" 
-                  name="lastName" 
-                  placeholder="Прізвище" 
-                  className="input-field"
-                  defaultValue={profile.lastName}
-                />
-                <input 
-                  type="text" 
-                  name="firstName" 
-                  placeholder="Ім'я" 
-                  className="input-field"
-                  defaultValue={profile.firstName}
-                />
+                <input name="lastName"   value={profile.lastName}   onChange={handleChange} />
+                <input name="firstName"  value={profile.firstName}  onChange={handleChange} />
               </div>
               <div className="form-row">
-                <input 
-                  type="text" 
-                  name="nickname" 
-                  placeholder="Позивний" 
-                  className="input-field"
-                  defaultValue={profile.nickname}
-                />
-                <input 
-                  type="email" 
-                  name="email" 
-                  placeholder="E-mail" 
-                  className="input-field"
-                  defaultValue={profile.email}
-                />
+                <input name="nickname"   value={profile.nickname}   onChange={handleChange} />
+                <input name="email"      value={profile.email}      onChange={handleChange} />
               </div>
-              <input 
-                type="text" 
-                name="location" 
-                placeholder="Місто, країна" 
-                className="input-field full-width"
-                defaultValue={profile.location}
-              />
-              <textarea 
-                name="problems" 
-                rows="2" 
-                placeholder="Проблеми"
-                className="input-field"
-                defaultValue={profile.problems}
-              ></textarea>
+              <input name="location"    value={profile.location}  onChange={handleChange} />
+              <textarea name="problems" rows="2" value={profile.problems} onChange={handleChange} />
               <button type="submit" className="submit-btn">Змінити</button>
             </form>
           </div>
@@ -136,6 +60,4 @@ const ProfilePage = () => {
       </main>
     </div>
   );
-};
-
-export default ProfilePage;
+}

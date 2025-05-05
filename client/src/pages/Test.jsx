@@ -1,6 +1,7 @@
 // src/pages/Test.jsx
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { submitTest } from '../services/api';
 
 const questions = [
   {
@@ -63,66 +64,34 @@ const questions = [
 
 export default function Test() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { firstName } = useLocation().state || {};
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
-  // Отримуємо firstName з location.state, якщо воно передано
-  const firstName = location.state?.firstName || "";
 
-  const handleOptionClick = (option) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[currentQuestion] = option;
-    setAnswers(updatedAnswers);
+  const handleOptionClick = option => {
+    const updated = [...answers];
+    updated[currentQuestion] = option;
+    setAnswers(updated);
   };
 
-  const nextQuestion = () => {
+  const nextQuestion = async () => {
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      console.log("Відповіді:", answers);
-      // Після проходження всіх питань переходимо на сторінку з терапевтами
-      navigate("/therapists");
+      return setCurrentQuestion(q => q + 1);
+    }
+    try {
+      await submitTest(answers);
+      navigate('/therapists');
+    } catch {
+      alert('Помилка надсилання тесту');
     }
   };
 
   const prevQuestion = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
+    if (currentQuestion > 0) setCurrentQuestion(q => q - 1);
   };
 
   return (
     <div className="center-container">
-      <div className="form-box">
-        <h2>Привіт, {firstName || "користувачу"}!</h2>
-        <p style={{ marginBottom: "15px" }}>
-          {questions[currentQuestion].title}
-        </p>
-
-        <div className="options">
-          {questions[currentQuestion].options.map((option, index) => (
-            <div
-              key={index}
-              className={`option ${
-                answers[currentQuestion] === option ? "selected" : ""
-              }`}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </div>
-          ))}
-        </div>
-
-        <div className="buttons">
-          <button className="button back" onClick={prevQuestion}>
-            Назад
-          </button>
-          <button className="button next" onClick={nextQuestion}>
-            {currentQuestion === questions.length - 1 ? "Завершити" : "Далі"}
-          </button>
-        </div>
-      </div>
-
       <style jsx>{`
         .center-container {
             display: flex;
