@@ -12,8 +12,8 @@ class MilitaryUserCreate(BaseModel):
     last_name: str
     phone: str | None = None
 
-    age: int
-    location: str
+    age: int | None = None
+    location: str | None = None
     rank: str | None = None
 
 
@@ -26,8 +26,8 @@ class UserReadBase(FromORMDto):
     last_name: str
     email: str
     phone: str | None
-    age: int
-    location: str
+    age: int | None
+    location: str | None
     role: UserRole
 
 

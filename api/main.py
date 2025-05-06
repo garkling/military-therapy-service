@@ -9,14 +9,13 @@ from api.router import main_router
 
 
 def get_app() -> FastAPI:
-    app = FastAPI(title="JuliaAI Backend Application", version="1.0.0")
+    app = FastAPI(title="Phoenix Therapy Backend Application", version="1.0.0")
     app.include_router(main_router)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[conf.CLIENT_ORIGIN],
-        allow_headers=['Content-Type'],
+        allow_headers=['Content-Type', 'Authorization'],
         allow_methods=['*'],
-        allow_credentials=True,
     )
     return app
 
