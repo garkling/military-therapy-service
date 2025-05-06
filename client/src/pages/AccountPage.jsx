@@ -15,7 +15,12 @@ const AccountPage = () => {
       return alert("Будь ласка, заповніть і ім'я, і прізвище");
     }
     try {
-      await createAccount({ firstName, lastName, email, code });
+      await createAccount({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        code
+      });
       navigate('/test', { state: { firstName, lastName, email } });
     } catch {
       alert('Не вдалося створити акаунт');

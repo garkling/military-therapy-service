@@ -51,8 +51,8 @@ class Therapist(User, table=True):
 class Military(User, table=True):
     __tablename__ = "military"
 
-    age: int
-    location: str
+    age: int | None = None
+    location: str | None = None
     rank: str | None = None
 
     role: UserRole = UserRole.MILITARY

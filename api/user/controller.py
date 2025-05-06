@@ -22,7 +22,7 @@ from api.user.services import MilitaryService
 from api.user.services import TherapistService
 from api.user.services import UserService
 
-router = APIRouter(prefix='/user', route_class=ErrorHandlingRoute)
+router = APIRouter(prefix='/users', route_class=ErrorHandlingRoute)
 
 
 class UserController:
@@ -43,7 +43,7 @@ class UserController:
             email=auth0_info.email,
             **user_create.model_dump()
         )
-        return UserRead.validate_python(created)
+        return MilitaryUserRead.model_validate(created)
 
     async def update_user(self, body: UserUpdate, user: User) -> UserRead:
         if user.role == UserRole.MILITARY:
