@@ -1,51 +1,41 @@
-// ChatPage.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ChatList from "../components/ChatList";
 import ChatBox from "../components/ChatBox";
-import { useApi } from "../api/apiClient.ts";
-import { useParams } from "react-router-dom";
+import "../components/ChatList.css";
+import "../components/ChatBox.css";
 
 const ChatPage = () => {
   const [text, setText] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [chats, setChats] = useState([]);
+  const currentUsername = "you";
 
-  const { chat_id } = useParams(); // Chat ID from URL params
-  const { listMessages, sendMessage } = useApi();
-
-  const currentUsername = "you"; // Ideally, fetch this dynamically
-
-  useEffect(() => {
-    if (!chat_id) return;
-
-    const fetchMessages = async () => {
-      const data = await listMessages(chat_id);
-      setMessages(data);
-    };
-
-    fetchMessages();
-  }, [chat_id, listMessages]);
-
-  const handleSendMessage = async () => {
-    if (!text.trim()) return;
-
-    const newMessage = await sendMessage(chat_id, text);
-    setMessages(prev => [...prev, newMessage]);
-    setText("");
-  };
+  const users = [
+    { username: "you", name: "Я", online: true },
+    { username: "companion", name: "Тетяна", online: true },
+  ];
 
   const handleTextChange = (e) => {
     setText(e.target.value);
   };
 
+  const handleSendMessage = () => {
+    if (!text.trim()) return;
+
+    const newChat = {
+      username: currentUsername,
+      message: text,
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+
+    setChats((prev) => [...prev, newChat]);
+    setText("");
+  };
+
   return (
     <div className="chat-wrapper">
       <ChatList
-        chats={messages.map(msg => ({
-          username: msg.author_name,
-          message: msg.content,
-          time: new Date(msg.sent_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        }))}
-        users={[{ username: currentUsername }, { username: "companion" }]} // Adjust accordingly
+        chats={chats}
+        users={users}
         currentUsername={currentUsername}
         handleSendMessage={handleSendMessage}
       />

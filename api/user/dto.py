@@ -24,6 +24,7 @@ class UserReadBase(FromORMDto):
     id: str
     first_name: str
     last_name: str
+    name: str
     email: str
     phone: str | None
     age: int | None
@@ -40,6 +41,7 @@ class TherapistUserRead(UserReadBase):
     experience: int
     verified: bool
     location: str
+    bio: str
 
     expertises: list[int]
 
@@ -85,6 +87,7 @@ class TherapistCreate(BaseModel):
 
     age: int
     location: str
+    bio: str
 
     education: str
     experience: int

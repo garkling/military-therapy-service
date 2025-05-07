@@ -56,6 +56,7 @@ def upgrade() -> None:
                     sa.Column('last_name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
                     sa.Column('email', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
                     sa.Column('phone', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+                    sa.Column('bio', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
                     sa.Column('age', sa.Integer(), nullable=False),
                     sa.Column('education', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
                     sa.Column('experience', sa.Integer(), nullable=False),

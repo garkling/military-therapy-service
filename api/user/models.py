@@ -38,6 +38,7 @@ class Therapist(User, table=True):
     experience: int
     verified: bool = Field(default=False)
     location: str
+    bio: str
 
     expertises: list['TherapistExpertise'] = Relationship(
         back_populates="therapists",
