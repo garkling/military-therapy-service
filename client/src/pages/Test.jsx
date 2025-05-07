@@ -1,192 +1,157 @@
 // src/pages/Test.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { submitTest } from '../services/api';
-
-const questions = [
-  {
-    title: "Відчуття небезпеки",
-    options: [
-      "Рідко або ніколи",
-      "Часом відчуваю тривогу",
-      "Постійно насторожений і не можу розслабитися",
-    ],
-  },
-  {
-    title: "Гнів та самоконтроль",
-    options: [
-      "Ні, я контролюю свої емоції",
-      "Іноді важко стриматися, але справляюся",
-      "Часто вибухаю або не можу контролювати гнів",
-    ],
-  },
-  {
-    title: "Відносини з оточенням",
-    options: [
-      "Добре, є підтримка",
-      "Часом важко, уникаю розмов про службу",
-      "Віддалився від усіх, не хочу спілкуватися",
-    ],
-  },
-  {
-    title: "Спогади про бойові дії",
-    options: [
-      "Рідко або не заважають",
-      "Іноді з'являються, але я можу контролювати їх",
-      "Часто переслідують, важко від них позбутися",
-    ],
-  },
-  {
-    title: "Сон",
-    options: [
-      "Сплю нормально",
-      "Часом прокидаюся або довго засинаю",
-      "Постійно не висипаюся, сняться важкі сни або кошмари",
-    ],
-  },
-  {
-    title: "Відчуття сенсу та мотивація",
-    options: [
-      "Так, у мене є цілі та мотивація",
-      "Часом втрачаю інтерес, але намагаюся триматися",
-      "Важко знайти сенс у тому, що роблю",
-    ],
-  },
-  {
-    title: "Як я хочу відвідувати терапію?",
-    options: ["Офлайн", "Онлайн"],
-  },
-  {
-    title: "Терапевт якої статі буде комфортний для мене?",
-    options: ["Чоловік", "Жінка", "Неважливо"],
-  },
-];
+import { getQuestions, submitTest } from '../services/api';
 
 export default function Test() {
   const navigate = useNavigate();
   const { firstName } = useLocation().state || {};
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState([]);
 
-  const handleOptionClick = option => {
-    const updated = [...answers];
-    updated[currentQuestion] = option;
-    setAnswers(updated);
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
+  const [answers, setAnswers] = useState({}); // { [questionId]: answerNumber }
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchQuestions() {
+      try {
+        const data = await getQuestions();
+        setQuestions(data);
+      } catch (e) {
+        setError('Не вдалося завантажити питання');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchQuestions();
+  }, []);
+
+  const handleOptionClick = (optionIdx) => {
+    const questionId = questions[currentQuestionIdx].id;
+    setAnswers(prev => ({ ...prev, [questionId]: optionIdx + 1 }));
   };
 
   const nextQuestion = async () => {
-    if (currentQuestion < questions.length - 1) {
-      return setCurrentQuestion(q => q + 1);
-    }
-    try {
-      // await submitTest(answers);
-      navigate('/therapists');
-    } catch {
-      alert('Помилка надсилання тесту');
+    if (currentQuestionIdx < questions.length - 1) {
+      setCurrentQuestionIdx(idx => idx + 1);
+    } else {
+      try {
+        // prepare payload: [{ id, answer }]
+        const payload = questions.map(q => ({ id: q.id, answer: answers[q.id] || null }));
+        await submitTest(payload);
+        navigate('/therapists');
+      } catch (e) {
+        alert('Помилка надсилання тесту');
+      }
     }
   };
 
   const prevQuestion = () => {
-    if (currentQuestion > 0) setCurrentQuestion(q => q - 1);
+    if (currentQuestionIdx > 0) {
+      setCurrentQuestionIdx(idx => idx - 1);
+    }
   };
 
+  if (loading) return <p>Завантаження питань...</p>;
+  if (error) return <p>{error}</p>;
+
+  const question = questions[currentQuestionIdx];
+  const selectedAnswer = answers[question.id];
+
   return (
-      <div className="center-container">
-        <div className="form-box">
-          <h2>Привіт, {firstName || "користувачу"}!</h2>
-          <p style={{marginBottom: "15px"}}>
-            {questions[currentQuestion].title}
-          </p>
+    <div className="center-container">
+      <div className="form-box">
+        <h2>Привіт, {firstName || 'користувачу'}!</h2>
+        <p style={{ marginBottom: '15px' }}>{question.title}</p>
 
-          <div className="options">
-            {questions[currentQuestion].options.map((option, index) => (
-                <div
-                    key={index}
-                    className={`option ${
-                        answers[currentQuestion] === option ? "selected" : ""
-                    }`}
-                    onClick={() => handleOptionClick(option)}
-                >
-                  {option}
-                </div>
-            ))}
-          </div>
-
-          <div className="buttons">
-            <button className="button back" onClick={prevQuestion}>
-              Назад
-            </button>
-            <button className="button next" onClick={nextQuestion}>
-              {currentQuestion === questions.length - 1 ? "Завершити" : "Далі"}
-            </button>
-          </div>
+        <div className="options">
+          {question.options.map((opt, idx) => (
+            <div
+              key={idx}
+              className={`option ${selectedAnswer === idx + 1 ? 'selected' : ''}`}
+              onClick={() => handleOptionClick(idx)}
+            >
+              {opt}
+            </div>
+          ))}
         </div>
-        <style jsx="true">{`
-          .center-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #FFF9F2;
-            padding: 20px;
-          }
 
-          .form-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-          }
-
-          .options {
-            margin-top: 20px;
-          }
-
-          .option {
-            background: #eaeec6;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: all 0.2s ease;
-          }
-
-          .option:hover {
-            background: #dbe2b9;
-          }
-
-          .option.selected {
-            background: #c4dca6;
-            font-weight: bold;
-          }
-
-          .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-          }
-
-          .button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-          }
-
-          .back {
-            background-color: #b6d6f2;
-            color: #333;
-          }
-
-          .next {
-            background-color: #aab08f;
-            color: white;
-          }
-        `}</style>
+        <div className="buttons">
+          <button className="button back" onClick={prevQuestion} disabled={currentQuestionIdx === 0}>
+            Назад
+          </button>
+          <button className="button next" onClick={nextQuestion} disabled={selectedAnswer == null}>
+            {currentQuestionIdx === questions.length - 1 ? 'Завершити' : 'Далі'}
+          </button>
+        </div>
       </div>
+      <style jsx="true">{`
+        .center-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          background-color: #FFF9F2;
+          padding: 20px;
+        }
+
+        .form-box {
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          text-align: center;
+          max-width: 400px;
+          width: 100%;
+        }
+
+        .options {
+          margin-top: 20px;
+        }
+
+        .option {
+          background: #eaeec6;
+          padding: 12px 16px;
+          border-radius: 8px;
+          margin: 10px 0;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .option:hover {
+          background: #dbe2b9;
+        }
+
+        .option.selected {
+          background: #c4dca6;
+          font-weight: bold;
+        }
+
+        .buttons {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+        }
+
+        .button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        .back {
+          background-color: #b6d6f2;
+          color: #333;
+        }
+
+        .next {
+          background-color: #aab08f;
+          color: white;
+        }
+      `}</style>
+    </div>
   );
 }
