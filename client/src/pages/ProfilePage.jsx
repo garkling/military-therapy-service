@@ -1,5 +1,5 @@
-// src/pages/ProfilePage.jsx
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchProfile, updateProfile } from '../services/api';
 import '../styles/soldier.css';
 
@@ -32,7 +32,33 @@ export default function ProfilePage() {
 
   return (
     <div className="page-container">
-      <aside>{/* sidebar */}</aside>
+      <aside className="sidebar">
+        <div className="overlap-group">
+          <h1 className="platform-name">PHOENIX</h1>
+          <nav className="nav">
+            <ul>
+              <li>
+                <Link to="/therapists" className="text-wrapper">
+                  психологи
+                </Link>
+              </li>
+              <li>
+                <Link to="/profile" className="text-wrapper-2">
+                  профіль
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <a href="tel:+380000000000" className="call-icon" aria-label="Зателефонувати">
+            <img
+              className="phone-call-img"
+              src="https://c.animaapp.com/m8of8lb90J94Ha/img/phone-call-img.png"
+              alt="Іконка телефону"
+            />
+          </a>
+        </div>
+      </aside>
+
       <main className="main-content">
         <section className="profile-section">
           <div className="profile-image-container">
