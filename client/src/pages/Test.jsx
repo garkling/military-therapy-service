@@ -79,7 +79,7 @@ export default function Test() {
       return setCurrentQuestion(q => q + 1);
     }
     try {
-      await submitTest(answers);
+      // await submitTest(answers);
       navigate('/therapists');
     } catch {
       alert('Помилка надсилання тесту');

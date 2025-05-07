@@ -62,6 +62,10 @@ class UserController:
         therapist = self._therapist_service.create(**body.extract())
         return TherapistUserRead.model_validate(therapist)
 
+    async def get_therapists(self) -> list[TherapistUserRead]:
+        therapists = self._therapist_service.list()
+        return [TherapistUserRead.model_validate(th) for th in therapists]
+
 
 @router.get("/me", status_code=status.HTTP_200_OK, response_model=UserReadType)
 async def userinfo(
@@ -102,7 +106,7 @@ async def delete_user(
     await controller.delete_user(user_id)
 
 
-@router.post("/therapist", status_code=status.HTTP_201_CREATED, response_model=TherapistUserRead)
+@router.post("/therapists", status_code=status.HTTP_201_CREATED, response_model=TherapistUserRead)
 async def create_therapist(
     user: APIGuard,
     body: TherapistCreate,
@@ -112,4 +116,13 @@ async def create_therapist(
     #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Not enough permissions')
 
     response = await controller.create_therapist(body)
+    return response
+
+
+@router.get("/therapists", status_code=status.HTTP_200_OK, response_model=list[TherapistUserRead])
+async def get_therapists(
+    user: APIGuard,
+    controller: Annotated[UserController, Depends()],
+) -> list[TherapistUserRead]:
+    response = await controller.get_therapists()
     return response

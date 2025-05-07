@@ -123,3 +123,6 @@ class TherapistService:
         user.expertises = self._expertise_repo.get_by_codes(expertises)
         self._therapist_repo.update(user)
         return user
+
+    def list(self):
+        return self._therapist_repo.list()

@@ -17,7 +17,7 @@ api.interceptors.request.use(cfg => {
 
 export const createAccount   = data => api.post('/users', data);
 export const submitTest      = answers => api.post('/assessment', { answers });
-export const fetchTherapists = () => api.get('/therapists');
+export const fetchTherapists = () => api.get('/users/therapists');
 export const fetchProfile    = () => api.get('/users/me');
 export const updateProfile   = data => api.put('/users', data);
 

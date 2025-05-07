@@ -1,98 +1,77 @@
-// src/components/ChatList.js
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useApi } from "../api/apiClient.ts";           // ← helper that adds the token
+import React, { useState, useEffect, useRef } from "react";
 import "./ChatList.css";
+import { Link } from "react-router-dom";
 
-const ChatList = () => {
-  const { listChats } = useApi();            // GET /api/v1/chats
-  const [chats, setChats] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const ChatList = ({ chats, users, currentUsername, handleSendMessage }) => {
+  const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef(null);
 
-  /* ─────────────────────────────────────────────────────────
-     fetch chats once on mount
-  ───────────────────────────────────────────────────────── */
+  const companion = users.find(user => user.username !== currentUsername) || {};
+  const companionName = companion.name || companion.username || "User";
+  const isOnline = companion.online ? "онлайн" : "офлайн";
+
   useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const data = await listChats();
-        setChats(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchChats();
-  }, [listChats]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chats]);
 
-  /* ─────────────────────────────────────────────────────────
-     rendering helpers
-  ───────────────────────────────────────────────────────── */
-  const renderLastLine = (chat) => {
-    if (!chat.last_message) return "Немає повідомлень";
-    return `${chat.last_message.author_name}: ${chat.last_message.content}`;
+  const handleMessageSend = () => {
+    if (newMessage.trim()) {
+      handleSendMessage(newMessage);
+      setNewMessage("");
+    }
   };
 
-  const renderTime = (iso) =>
-    new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const handleTextChange = (e) => {
+    setNewMessage(e.target.value);
+  };
 
-  /* ───────────────────────────────────────────────────────── */
-  if (loading) return <div className="chat-wrapper">Завантаження чатів…</div>;
-  if (error)   return <div className="chat-wrapper">Помилка: {error}</div>;
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleMessageSend();
+    }
+  };
 
   return (
     <div className="chat-wrapper">
-      {/* ───────── sidebar ───────── */}
       <aside className="sidebar">
         <div className="overlap-group">
           <h1 className="platform-name">phoenix</h1>
           <nav className="nav">
             <ul>
               <li><Link to="/therapists" className="text-wrapper">психологи</Link></li>
-              <li><Link to="/chats"      className="div">чати</Link></li>
-              <li><Link to="/profile"    className="text-wrapper-2">профіль</Link></li>
+              <li><Link to="/chat" className="div">чат</Link></li>
+              <li><Link to="/profile" className="text-wrapper-2">профіль</Link></li>
             </ul>
           </nav>
+          <a href="tel:+380000000000" className="call-icon" aria-label="Зателефонувати">
+            <img className="phone-call-img" src="https://c.animaapp.com/m8of8lb90J94Ha/img/phone-call-img.png" alt="Іконка телефону" />
+          </a>
         </div>
       </aside>
 
-      {/* ───────── main list ───────── */}
       <main className="chat-container">
         <header className="chat-header">
-          <h2 className="chat-title">Ваші чати</h2>
+          <button className="back-button">&lt; Назад</button>
+          <h3 className="chat-title"><strong>{companionName}</strong></h3>
+          <span className={`status ${isOnline === 'онлайн' ? 'online' : 'offline'}`}>
+            {isOnline}
+          </span>
         </header>
 
-        <ul className="chat-list">
-          {chats.map((chat) => {
-            const { id, participant } = chat;
-            const name =
-              [participant.first_name, participant.last_name]
-                .filter(Boolean)
-                .join(" ")
-                || "Без імені";
-
+        <div className="messages">
+          {chats.map((chat, index) => {
+            const isCurrentUser = chat.username === currentUsername;
             return (
-              <li key={id} className="chat-preview">
-                <Link to={`/chat/${id}`} className="chat-preview-link">
-                  <div className="chat-preview-header">
-                    <span className="chat-preview-name">{name}</span>
-                    {chat.last_updated_at && (
-                      <span className="chat-preview-time">
-                        {renderTime(chat.last_updated_at)}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="chat-preview-last">
-                    {renderLastLine(chat)}
-                  </div>
-                </Link>
-              </li>
+              <div key={index} className={`message-row ${isCurrentUser ? 'own' : 'other'}`}>
+                <div className="message-bubble">
+                  <div className="message-text">{chat.message}</div>
+                  <div className="message-time">{chat.time || "..."}</div>
+                </div>
+              </div>
             );
           })}
-        </ul>
+          <div ref={messagesEndRef} />
+        </div>
       </main>
     </div>
   );
